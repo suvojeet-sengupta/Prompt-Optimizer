@@ -1,5 +1,4 @@
-import type { Category } from './prompts';
-import { systemPrompts } from './prompts';
+import { UNIVERSAL_SYSTEM_PROMPT } from './prompts';
 
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent';
 
@@ -17,8 +16,7 @@ interface GeminiResponse {
 }
 
 export async function callGeminiAPI(
-    userInput: string,
-    category: Category
+    userInput: string
 ): Promise<string> {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
@@ -26,14 +24,12 @@ export async function callGeminiAPI(
         throw new Error('API key not configured. Please set VITE_GEMINI_API_KEY environment variable.');
     }
 
-    const systemPrompt = systemPrompts[category];
-
     const requestBody = {
         contents: [
             {
                 parts: [
                     {
-                        text: `${systemPrompt}\n\nUser's Input: "${userInput}"\n\nTransform this into an optimized, detailed prompt:`
+                        text: `${UNIVERSAL_SYSTEM_PROMPT}\n\nUser's Input: "${userInput}"\n\nTransform this into an optimized, detailed prompt:`
                     }
                 ]
             }

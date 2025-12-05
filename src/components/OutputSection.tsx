@@ -104,9 +104,9 @@ export function OutputSection({ output, isLoading, error }: OutputSectionProps) 
                             <span className="text-4xl">🧪</span>
                         </div>
                         <div>
-                            <p className="text-lg font-medium text-white/70">Ready for Alchemy</p>
+                            <p className="text-lg font-medium text-white/70">Ready to Optimize</p>
                             <p className="text-sm text-white/40 mt-2 max-w-sm">
-                                Enter your raw idea on the left, select a category, and watch the magic happen!
+                                Enter your raw idea on the left, and let our AI transform it into a perfect prompt.
                             </p>
                         </div>
                         <div className="flex gap-2 mt-4">

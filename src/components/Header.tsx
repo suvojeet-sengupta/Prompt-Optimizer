@@ -1,4 +1,4 @@
-import { Sparkles, Wand2 } from 'lucide-react';
+import { Atom, History } from 'lucide-react';
 
 interface HeaderProps {
     onHistoryClick: () => void;
@@ -7,45 +7,30 @@ interface HeaderProps {
 
 export function Header({ onHistoryClick, historyCount }: HeaderProps) {
     return (
-        <header className="relative py-6 px-4 md:px-8">
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
-                {/* Logo & Title */}
-                <div className="flex items-center gap-3">
-                    <div className="relative">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 flex items-center justify-center animate-pulse-glow">
-                            <Wand2 className="w-6 h-6 text-white" />
-                        </div>
-                        <Sparkles className="absolute -top-1 -right-1 w-4 h-4 text-yellow-400 animate-sparkle" />
-                    </div>
-                    <div>
-                        <h1 className="text-2xl md:text-3xl font-bold gradient-text">
-                            Prompt Alchemist
-                        </h1>
-                        <p className="text-sm text-white/60 hidden md:block">
-                            Transform your ideas into perfect AI prompts
-                        </p>
-                    </div>
+        <header className="px-6 py-4 flex items-center justify-between border-b border-white/5 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+            <div className="flex items-center gap-3 group cursor-pointer" onClick={() => window.location.reload()}>
+                <div className="relative">
+                    <div className="absolute inset-0 bg-blue-500 blur-lg opacity-20 group-hover:opacity-40 transition-opacity rounded-full"></div>
+                    <Atom className="w-8 h-8 text-blue-400 animate-spin-slow relative z-10" />
                 </div>
-
-                {/* History Button */}
-                <button
-                    onClick={onHistoryClick}
-                    className="btn-secondary flex items-center gap-2"
-                >
-                    <span className="hidden md:inline">History</span>
-                    {historyCount > 0 && (
-                        <span className="bg-purple-500 text-white text-xs px-2 py-0.5 rounded-full">
-                            {historyCount}
-                        </span>
-                    )}
-                </button>
+                <div>
+                    <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">
+                        Prompt Optimizer
+                    </h1>
+                    <p className="text-[10px] text-slate-400 tracking-wider font-medium uppercase">AI-Powered Refiner</p>
+                </div>
             </div>
 
-            {/* Decorative Elements */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none -z-10">
-                <div className="absolute top-10 left-10 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl" />
-                <div className="absolute top-20 right-20 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl" />
-            </div>
+            <button
+                onClick={onHistoryClick}
+                className="relative p-2 rounded-xl hover:bg-white/5 transition-colors group"
+                title="History"
+            >
+                <History className="w-5 h-5 text-slate-400 group-hover:text-blue-400 transition-colors" />
+                {historyCount > 0 && (
+                    <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-blue-500 rounded-full border-2 border-slate-900"></span>
+                )}
+            </button>
         </header>
     );
 }

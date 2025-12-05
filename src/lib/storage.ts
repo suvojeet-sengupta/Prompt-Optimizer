@@ -1,11 +1,8 @@
-import type { Category } from './prompts';
-
 export interface HistoryItem {
     id: string;
     timestamp: number;
     input: string;
     output: string;
-    category: Category;
 }
 
 const STORAGE_KEY = 'prompt-alchemist-history';

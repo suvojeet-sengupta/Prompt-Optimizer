@@ -3,7 +3,6 @@ import { Header } from './components/Header';
 import { InputSection } from './components/InputSection';
 import { OutputSection } from './components/OutputSection';
 import { HistoryPanel } from './components/HistoryPanel';
-import type { Category } from './lib/prompts';
 import { callGeminiAPI } from './lib/gemini';
 import type { HistoryItem } from './lib/storage';
 import { getHistory, saveToHistory } from './lib/storage';
@@ -11,7 +10,6 @@ import { getHistory, saveToHistory } from './lib/storage';
 function App() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
-  const [category, setCategory] = useState<Category>('coding');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
@@ -34,14 +32,13 @@ function App() {
     setOutput('');
 
     try {
-      const result = await callGeminiAPI(input, category);
+      const result = await callGeminiAPI(input);
       setOutput(result);
 
       // Save to history
       saveToHistory({
         input: input.trim(),
         output: result,
-        category,
       });
       refreshHistory();
     } catch (err) {
@@ -54,12 +51,13 @@ function App() {
   const handleLoadHistory = (item: HistoryItem) => {
     setInput(item.input);
     setOutput(item.output);
-    setCategory(item.category);
     setError(null);
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col relative overflow-x-hidden">
+      {/* Background/Overlay elements if desired in CSS */}
+
       {/* Header */}
       <Header
         onHistoryClick={() => setIsHistoryOpen(true)}
@@ -67,33 +65,30 @@ function App() {
       />
 
       {/* Main Content */}
-      <main className="flex-1 px-4 md:px-8 pb-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:h-[calc(100vh-160px)] h-auto">
+      <main className="flex-1 px-4 md:px-8 pb-8 pt-4">
+        <div className="max-w-[1600px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:h-[calc(100vh-140px)] h-auto">
             {/* Left Column - Input */}
-            <InputSection
-              input={input}
-              onInputChange={setInput}
-              category={category}
-              onCategoryChange={setCategory}
-              onSubmit={handleSubmit}
-              isLoading={isLoading}
-            />
+            <div className="lg:overflow-hidden h-full">
+              <InputSection
+                input={input}
+                onInputChange={setInput}
+                onSubmit={handleSubmit}
+                isLoading={isLoading}
+              />
+            </div>
 
             {/* Right Column - Output */}
-            <OutputSection
-              output={output}
-              isLoading={isLoading}
-              error={error}
-            />
+            <div className="lg:overflow-hidden h-full">
+              <OutputSection
+                output={output}
+                isLoading={isLoading}
+                error={error}
+              />
+            </div>
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="py-4 text-center text-white/30 text-sm">
-        <p>Made with ✨ magic | Powered by Gemini AI</p>
-      </footer>
 
       {/* History Panel */}
       <HistoryPanel
