@@ -11,6 +11,7 @@ import { CommandMenu } from './components/CommandMenu';
 
 function App() {
   const [input, setInput] = useState('');
+  const [lastOptimizedInput, setLastOptimizedInput] = useState('');
   const [output, setOutput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,6 +34,7 @@ function App() {
     try {
       const result = await callGeminiAPI(input);
       setOutput(result);
+      setLastOptimizedInput(input);
 
       // Save to history
       saveToHistory({
@@ -61,6 +63,7 @@ function App() {
 
   const handleLoadHistory = (item: HistoryItem) => {
     setInput(item.input);
+    setLastOptimizedInput(item.input);
     setOutput(item.output);
   };
 
@@ -69,12 +72,12 @@ function App() {
   };
 
   return (
-    <div className="h-screen bg-[#18181b] text-white font-sans selection:bg-indigo-500/30 flex flex-col overflow-hidden">
+    <div className="h-screen bg-[#18181b] bg-grid-pattern text-white font-sans selection:bg-indigo-500/30 flex flex-col overflow-hidden">
 
       <TopBar
         onCopy={handleCopy}
         onSave={() => setIsHistoryOpen(true)} // Using Save button to open history for now
-        onClose={() => { setInput(''); setOutput(''); }}
+        onClose={() => { setInput(''); setOutput(''); setLastOptimizedInput(''); }}
       />
 
       {/* Main Content Area - Flex Grow to take remaining space, handles its own scroll */}
@@ -94,6 +97,7 @@ function App() {
         <div className="flex-1 flex flex-col min-h-0 relative">
           <EditorDisplay
             output={output}
+            originalInput={lastOptimizedInput}
             isLoading={isLoading}
             error={error}
           />
