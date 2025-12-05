@@ -69,7 +69,7 @@ function App() {
       {/* Main Content */}
       <main className="flex-1 px-4 md:px-8 pb-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-[calc(100vh-160px)] min-h-[600px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:h-[calc(100vh-160px)] h-auto">
             {/* Left Column - Input */}
             <InputSection
               input={input}

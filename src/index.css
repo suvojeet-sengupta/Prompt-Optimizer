@@ -71,10 +71,13 @@ body {
 
 /* Animations */
 @keyframes sparkle {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.5;
     transform: scale(1.2);
@@ -82,18 +85,24 @@ body {
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
   }
+
   50% {
     box-shadow: 0 0 40px rgba(102, 126, 234, 0.6);
   }
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -103,6 +112,7 @@ body {
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -113,6 +123,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -229,40 +240,87 @@ body {
   border-radius: 16px;
   padding: 24px;
   min-height: 300px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
-.output-area h1, .output-area h2, .output-area h3 {
-  color: #f093fb;
-  margin-bottom: 12px;
+.output-area h1,
+.output-area h2,
+.output-area h3 {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.output-area h1 {
+  font-size: 1.5rem;
+}
+
+.output-area h2 {
+  font-size: 1.25rem;
+}
+
+.output-area h3 {
+  font-size: 1.1rem;
 }
 
 .output-area p {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-.output-area ul, .output-area ol {
+.output-area ul,
+.output-area ol {
   margin-left: 20px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .output-area li {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+  padding-left: 4px;
 }
 
 .output-area code {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2px 8px;
+  background: rgba(102, 126, 234, 0.15);
+  color: #a5b4fc;
+  padding: 2px 6px;
   border-radius: 4px;
   font-family: 'Fira Code', monospace;
+  font-size: 0.9em;
 }
 
 .output-area pre {
   background: rgba(0, 0, 0, 0.4);
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow-x: auto;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.output-area pre code {
+  background: transparent;
+  color: #e2e8f0;
+  padding: 0;
+}
+
+.output-area strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.output-area blockquote {
+  border-left: 4px solid #667eea;
+  padding-left: 16px;
+  margin: 16px 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
 }
 
 /* Loading Animation */
@@ -290,9 +348,13 @@ body {
 }
 
 @keyframes bounce {
-  0%, 80%, 100% {
+
+  0%,
+  80%,
+  100% {
     transform: scale(0);
   }
+
   40% {
     transform: scale(1);
   }
