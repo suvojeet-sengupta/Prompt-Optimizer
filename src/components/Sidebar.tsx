@@ -14,7 +14,7 @@ export function Sidebar({ history, onLoadHistory }: SidebarProps) {
         <aside
             className={`
                 flex-shrink-0 h-full flex flex-col overflow-hidden select-none
-                glass-panel border-r-0 rounded-r-2xl
+                glass-panel border rounded-2xl
                 transition-all duration-300 ease-out
                 ${isCollapsed ? 'w-16' : 'w-[280px]'}
             `}

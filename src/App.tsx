@@ -65,7 +65,8 @@ function App() {
       />
 
       <div className="flex-1 flex min-h-0 pt-14">
-        <div className="hidden md:flex h-full">
+        {/* Sidebar - Visible on Desktop */}
+        <div className="hidden md:flex h-full p-3 pr-0">
           <Sidebar
             history={history}
             onLoadHistory={handleLoadHistory}

@@ -29,10 +29,10 @@ export function EditorDisplay({ output, originalInput, isLoading, error }: Edito
     };
 
     return (
-        <main className="flex-1 w-full max-w-5xl mx-auto pt-6 pb-48 px-4 md:px-6 overflow-y-auto custom-scrollbar scroll-smooth flex flex-col">
+        <main className="flex-1 w-full max-w-5xl mx-auto pt-6 pb-48 px-4 md:px-6 overflow-hidden flex flex-col">
             
             {/* Header / Tabs */}
-            <div className="flex items-center justify-between mb-4 px-1">
+            <div className="flex items-center justify-between mb-4 px-1 flex-shrink-0">
                 <div className="flex items-center space-x-1 bg-zinc-900/50 p-1 rounded-lg border border-zinc-800/50">
                    <TabButton 
                         active={activeTab === 'optimized'} 
@@ -64,14 +64,14 @@ export function EditorDisplay({ output, originalInput, isLoading, error }: Edito
             </div>
 
             {/* Content Area */}
-            <div className="flex-1 min-h-[500px] w-full glass-panel rounded-2xl p-6 md:p-8 relative overflow-hidden flex flex-col">
+            <div className="flex-1 min-h-[400px] w-full glass-panel rounded-2xl relative overflow-hidden flex flex-col">
                 
                 {isLoading ? (
-                     <div className="w-full h-full flex flex-col justify-center">
+                     <div className="w-full h-full flex flex-col justify-center p-6 md:p-8">
                         <SkeletonLoader />
                     </div>
                 ) : error ? (
-                    <div className="flex-1 flex flex-col items-center justify-center text-red-400 animate-fade-in-up">
+                    <div className="flex-1 flex flex-col items-center justify-center text-red-400 animate-fade-in-up p-6">
                         <div className="bg-red-500/10 p-3 rounded-full mb-3">
                              <MessageSquare className="w-6 h-6" />
                         </div>
@@ -79,7 +79,7 @@ export function EditorDisplay({ output, originalInput, isLoading, error }: Edito
                         <p className="opacity-70 text-sm mt-1">{error}</p>
                     </div>
                 ) : !output ? (
-                    <div className="flex-1 flex flex-col items-center justify-center text-zinc-600 opacity-40 select-none pointer-events-none">
+                    <div className="flex-1 flex flex-col items-center justify-center text-zinc-600 opacity-40 select-none pointer-events-none p-6">
                         <Sparkles className="w-12 h-12 mb-4" />
                         <p className="text-sm font-medium">Ready to optimize your prompts</p>
                     </div>
@@ -91,29 +91,37 @@ export function EditorDisplay({ output, originalInput, isLoading, error }: Edito
                             initial="hidden"
                             animate="visible"
                             exit="exit"
-                            className="w-full h-full"
+                            className="w-full h-full flex flex-col"
                         >
                             {activeTab === 'optimized' && (
-                                <MarkdownRenderer content={output} />
+                                <div className="h-full overflow-hidden">
+                                    <MarkdownRenderer content={output} className="p-6 md:p-8" />
+                                </div>
                             )}
 
                             {activeTab === 'original' && (
-                                <div className="whitespace-pre-wrap text-zinc-300 text-sm leading-relaxed font-mono">
-                                    {originalInput}
+                                <div className="h-full overflow-y-auto custom-scrollbar p-6 md:p-8">
+                                    <div className="whitespace-pre-wrap text-zinc-300 text-sm leading-relaxed font-mono">
+                                        {originalInput}
+                                    </div>
                                 </div>
                             )}
 
                             {activeTab === 'diff' && (
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
-                                    <div className="flex flex-col h-full border-b md:border-b-0 md:border-r border-zinc-800 pb-6 md:pb-0 md:pr-6 overflow-y-auto custom-scrollbar">
-                                        <h4 className="text-xs font-semibold text-zinc-500 uppercase mb-3 sticky top-0 bg-[#131316] py-2 z-10">Original</h4>
-                                        <div className="whitespace-pre-wrap text-zinc-400 text-sm leading-relaxed font-mono opacity-80">
-                                            {originalInput}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 h-full">
+                                    <div className="flex flex-col h-full border-b md:border-b-0 md:border-r border-zinc-800 overflow-hidden">
+                                        <h4 className="text-xs font-semibold text-zinc-500 uppercase px-6 py-3 bg-[#18181b]/50 border-b border-zinc-800/50 flex-shrink-0 backdrop-blur-sm">Original</h4>
+                                        <div className="flex-1 overflow-y-auto custom-scrollbar p-6">
+                                            <div className="whitespace-pre-wrap text-zinc-400 text-sm leading-relaxed font-mono opacity-80">
+                                                {originalInput}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="flex flex-col h-full overflow-y-auto custom-scrollbar">
-                                        <h4 className="text-xs font-semibold text-indigo-400 uppercase mb-3 sticky top-0 bg-[#131316] py-2 z-10">Optimized</h4>
-                                        <MarkdownRenderer content={output} />
+                                    <div className="flex flex-col h-full overflow-hidden">
+                                        <h4 className="text-xs font-semibold text-indigo-400 uppercase px-6 py-3 bg-[#18181b]/50 border-b border-zinc-800/50 flex-shrink-0 backdrop-blur-sm">Optimized</h4>
+                                        <div className="flex-1 overflow-hidden">
+                                             <MarkdownRenderer content={output} className="p-6" />
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -123,7 +131,7 @@ export function EditorDisplay({ output, originalInput, isLoading, error }: Edito
             </div>
             
             {output && (
-                <div className="mt-4 flex justify-end px-2">
+                <div className="mt-4 flex justify-end px-2 flex-shrink-0">
                      <span className="text-[10px] text-zinc-600 bg-zinc-900/80 border border-zinc-800 px-2 py-1 rounded-full">
                         {output.length} chars
                     </span>
