@@ -3,6 +3,7 @@ import { callGeminiAPI } from './lib/gemini';
 import { getHistory, saveToHistory, type HistoryItem } from './lib/storage';
 import { TopBar } from './components/TopBar';
 import { BottomInputBar } from './components/BottomInputBar';
+import { Sidebar } from './components/Sidebar';
 import { EditorDisplay } from './components/EditorDisplay';
 import { Toast } from './components/Toast';
 import { HistoryPanel } from './components/HistoryPanel';
@@ -76,19 +77,32 @@ function App() {
       />
 
       {/* Main Content Area - Flex Grow to take remaining space, handles its own scroll */}
-      <div className="flex-1 flex flex-col min-h-0 relative">
-        <EditorDisplay
-          output={output}
-          isLoading={isLoading}
-          error={error}
-        />
+      {/* Main Content Area: Sidebar + Editor */}
+      <div className="flex-1 flex min-h-0 pt-14">
 
-        <BottomInputBar
-          input={input}
-          setInput={setInput}
-          onOptimize={handleOptimize}
-          isLoading={isLoading}
-        />
+        {/* Sidebar - Visible on Desktop */}
+        <div className="hidden md:block h-full">
+          <Sidebar
+            history={history}
+            onLoadHistory={handleLoadHistory}
+          />
+        </div>
+
+        {/* Editor Container */}
+        <div className="flex-1 flex flex-col min-h-0 relative">
+          <EditorDisplay
+            output={output}
+            isLoading={isLoading}
+            error={error}
+          />
+
+          <BottomInputBar
+            input={input}
+            setInput={setInput}
+            onOptimize={handleOptimize}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
 
       <Toast
