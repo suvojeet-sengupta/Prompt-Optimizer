@@ -1,24 +1,7 @@
-import { X, Trash2, Copy, Check, Clock, Code2, Feather, Briefcase, Heart, Palette } from 'lucide-react';
+import { X, Trash2, Copy, Check, Clock, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import type { HistoryItem } from '../lib/storage';
 import { clearHistory, deleteFromHistory } from '../lib/storage';
-import type { Category } from '../lib/prompts';
-
-const categoryIcons: Record<Category, typeof Code2> = {
-    coding: Code2,
-    writing: Feather,
-    business: Briefcase,
-    life: Heart,
-    art: Palette,
-};
-
-const categoryColors: Record<Category, string> = {
-    coding: 'from-blue-500 to-cyan-500',
-    writing: 'from-purple-500 to-pink-500',
-    business: 'from-green-500 to-emerald-500',
-    life: 'from-red-500 to-orange-500',
-    art: 'from-yellow-500 to-amber-500',
-};
 
 interface HistoryPanelProps {
     isOpen: boolean;
@@ -79,7 +62,7 @@ export function HistoryPanel({ isOpen, onClose, history, onRefresh, onLoadHistor
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b border-white/10">
                     <div className="flex items-center gap-2">
-                        <Clock className="w-5 h-5 text-purple-400" />
+                        <Clock className="w-5 h-5 text-blue-400" />
                         <h2 className="text-lg font-semibold text-white">History</h2>
                         <span className="text-sm text-white/50">({history.length})</span>
                     </div>
@@ -110,13 +93,10 @@ export function HistoryPanel({ isOpen, onClose, history, onRefresh, onLoadHistor
                                 <Clock className="w-8 h-8 text-white/30" />
                             </div>
                             <p className="text-white/50">No history yet</p>
-                            <p className="text-sm text-white/30 mt-1">Your alchemized prompts will appear here</p>
+                            <p className="text-sm text-white/30 mt-1">Your optimized prompts will appear here</p>
                         </div>
                     ) : (
                         history.map((item) => {
-                            const Icon = categoryIcons[item.category];
-                            const colorClass = categoryColors[item.category];
-
                             return (
                                 <div
                                     key={item.id}
@@ -129,10 +109,10 @@ export function HistoryPanel({ isOpen, onClose, history, onRefresh, onLoadHistor
                                     {/* Header */}
                                     <div className="flex items-start justify-between gap-2 mb-3">
                                         <div className="flex items-center gap-2">
-                                            <div className={`w-6 h-6 rounded-md bg-gradient-to-br ${colorClass} flex items-center justify-center`}>
-                                                <Icon className="w-3 h-3 text-white" />
+                                            <div className="w-6 h-6 rounded-md bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center">
+                                                <Sparkles className="w-3 h-3 text-white" />
                                             </div>
-                                            <span className="text-xs text-white/50 capitalize">{item.category}</span>
+                                            <span className="text-xs text-white/50 font-medium">Optimization</span>
                                         </div>
                                         <span className="text-xs text-white/40">{formatTime(item.timestamp)}</span>
                                     </div>
