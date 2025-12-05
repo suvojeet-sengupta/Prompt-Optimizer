@@ -31,9 +31,9 @@ export function BottomInputBar({ input, setInput, onOptimize, isLoading }: Botto
     return (
         <div className="fixed bottom-0 left-0 right-0 p-4 z-40 flex justify-center bg-gradient-to-t from-[#18181b] via-[#18181b] to-transparent pt-12">
             <div className="w-full max-w-3xl relative">
-                {/* Floating Input Container */}
-                <div className="bg-[#27272a] rounded-2xl border border-zinc-700 shadow-2xl overflow-hidden transition-shadow hover:border-zinc-600 focus-within:border-zinc-500 focus-within:ring-1 focus-within:ring-zinc-500/50">
-                    <div className="flex items-end p-2 gap-2">
+                {/* Floating Input Container - Glassmorphic */}
+                <div className="glass-panel rounded-2xl shadow-2xl overflow-hidden transition-all hover:border-zinc-600 focus-within:border-zinc-500 focus-within:ring-1 focus-within:ring-zinc-500/20">
+                    <div className="flex items-end p-3 gap-3">
                         {/* Textarea */}
                         <div className="flex-1 min-w-0">
                             <textarea
@@ -42,7 +42,7 @@ export function BottomInputBar({ input, setInput, onOptimize, isLoading }: Botto
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={handleKeyDown}
                                 placeholder="Describe your use case..."
-                                className="w-full bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm px-4 py-3 focus:outline-none resize-none max-h-[200px] overflow-y-auto custom-scrollbar leading-relaxed"
+                                className="w-full bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm px-4 py-3 focus:outline-none resize-none min-h-[48px] max-h-[300px] overflow-y-auto custom-scrollbar leading-relaxed"
                                 rows={1}
                                 disabled={isLoading}
                             />

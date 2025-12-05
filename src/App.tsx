@@ -80,8 +80,9 @@ function App() {
       {/* Main Content Area: Sidebar + Editor */}
       <div className="flex-1 flex min-h-0 pt-14">
 
+
         {/* Sidebar - Visible on Desktop */}
-        <div className="hidden md:block h-full">
+        <div className="hidden md:flex h-full">
           <Sidebar
             history={history}
             onLoadHistory={handleLoadHistory}
