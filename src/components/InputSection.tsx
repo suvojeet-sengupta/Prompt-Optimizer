@@ -28,12 +28,12 @@ export function InputSection({
 
             {/* Section Header */}
             <div className="flex items-center gap-3 relative z-10">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
-                    <Sparkles className="w-5 h-5 text-white" />
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 shadow-lg shadow-blue-500/5">
+                    <Sparkles className="w-5 h-5 text-blue-400" />
                 </div>
                 <div>
                     <h2 className="text-xl font-bold text-white">Input Configuration</h2>
-                    <p className="text-xs text-blue-200/70 font-medium">Describe your request in detail</p>
+                    <p className="text-xs text-blue-200/50 font-medium">Define your requirements</p>
                 </div>
             </div>
 
@@ -43,8 +43,8 @@ export function InputSection({
                     value={input}
                     onChange={(e) => onInputChange(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Describe what you need... (e.g., 'Write a python script to scrape data' or 'Create a marketing email for a new product')"
-                    className="input-area h-full min-h-[200px] text-lg placeholder:text-white/20"
+                    placeholder="Describe your request... (e.g. 'Create a React component for a dashboard widget' or 'Write a professional email about project delays')"
+                    className="input-area h-full min-h-[200px] text-lg placeholder:text-slate-600 font-normal"
                     disabled={isLoading}
                 />
             </div>
@@ -57,13 +57,13 @@ export function InputSection({
             >
                 {isLoading ? (
                     <>
-                        <Loader2 className="w-6 h-6 animate-spin" />
-                        <span>Optimizing...</span>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <span className="font-medium">Processing...</span>
                     </>
                 ) : (
                     <>
-                        <Wand2 className="w-6 h-6" />
-                        <span>Optimize Prompt 🚀</span>
+                        <Wand2 className="w-5 h-5" />
+                        <span className="font-medium">Run Optimization</span>
                     </>
                 )}
             </button>
