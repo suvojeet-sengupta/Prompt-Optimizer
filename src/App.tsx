@@ -1,35 +1,32 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Header } from './components/Header';
-import { InputSection } from './components/InputSection';
-import { OutputSection } from './components/OutputSection';
-import { HistoryPanel } from './components/HistoryPanel';
+import { useState, useEffect } from 'react';
 import { callGeminiAPI } from './lib/gemini';
-import type { HistoryItem } from './lib/storage';
-import { getHistory, saveToHistory } from './lib/storage';
+import { getHistory, saveToHistory, type HistoryItem } from './lib/storage';
+import { TopBar } from './components/TopBar';
+import { BottomInputBar } from './components/BottomInputBar';
+import { EditorDisplay } from './components/EditorDisplay';
+import { Toast } from './components/Toast';
+import { HistoryPanel } from './components/HistoryPanel';
 
 function App() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [toast, setToast] = useState<{ visible: boolean; message: string; sub?: string }>({ visible: false, message: '' });
 
   // Load history on mount
   useEffect(() => {
     setHistory(getHistory());
   }, []);
 
-  const refreshHistory = useCallback(() => {
-    setHistory(getHistory());
-  }, []);
-
-  const handleSubmit = async () => {
-    if (!input.trim() || isLoading) return;
+  const handleOptimize = async () => {
+    if (!input.trim()) return;
 
     setIsLoading(true);
     setError(null);
-    setOutput('');
+    setToast({ visible: true, message: 'Optimizing prompt...', sub: 'Extracting edits and improving structure.' });
 
     try {
       const result = await callGeminiAPI(input);
@@ -37,67 +34,75 @@ function App() {
 
       // Save to history
       saveToHistory({
-        input: input.trim(),
+        input,
         output: result,
+        timestamp: Date.now(),
+        // Category is removed, handled by universal prompt
       });
-      refreshHistory();
+      setHistory(getHistory()); // Refresh history
+
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+      setError(err instanceof Error ? err.message : 'An unknown error occurred');
+      console.error(err);
     } finally {
       setIsLoading(false);
+      setTimeout(() => setToast(prev => ({ ...prev, visible: false })), 3000); // Hide toast after delay
+    }
+  };
+
+  const handleCopy = async () => {
+    if (output) {
+      await navigator.clipboard.writeText(output);
+      setToast({ visible: true, message: 'Copied to clipboard', sub: 'Ready to paste' });
+      setTimeout(() => setToast(prev => ({ ...prev, visible: false })), 2000);
     }
   };
 
   const handleLoadHistory = (item: HistoryItem) => {
     setInput(item.input);
     setOutput(item.output);
-    setError(null);
+  };
+
+  const handleRefreshHistory = () => {
+    setHistory(getHistory());
   };
 
   return (
-    <div className="min-h-screen flex flex-col relative overflow-x-hidden">
-      {/* Background/Overlay elements if desired in CSS */}
+    <div className="min-h-screen bg-[#18181b] text-white font-sans selection:bg-indigo-500/30">
 
-      {/* Header */}
-      <Header
-        onHistoryClick={() => setIsHistoryOpen(true)}
-        historyCount={history.length}
+      <TopBar
+        onCopy={handleCopy}
+        onSave={() => setIsHistoryOpen(true)} // Using Save button to open history for now
+        onClose={() => { setInput(''); setOutput(''); }}
       />
 
-      {/* Main Content */}
-      <main className="flex-1 px-4 md:px-8 pb-8 pt-4">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:h-[calc(100vh-140px)] h-auto">
-            {/* Left Column - Input */}
-            <div className="lg:overflow-hidden h-full">
-              <InputSection
-                input={input}
-                onInputChange={setInput}
-                onSubmit={handleSubmit}
-                isLoading={isLoading}
-              />
-            </div>
+      <EditorDisplay
+        output={output}
+        isLoading={isLoading}
+        error={error}
+      />
 
-            {/* Right Column - Output */}
-            <div className="lg:overflow-hidden h-full">
-              <OutputSection
-                output={output}
-                isLoading={isLoading}
-                error={error}
-              />
-            </div>
-          </div>
-        </div>
-      </main>
+      <BottomInputBar
+        input={input}
+        setInput={setInput}
+        onOptimize={handleOptimize}
+        isLoading={isLoading}
+      />
 
-      {/* History Panel */}
+      <Toast
+        isVisible={toast.visible}
+        message={toast.message}
+        description={toast.sub}
+      />
+
       <HistoryPanel
         isOpen={isHistoryOpen}
         onClose={() => setIsHistoryOpen(false)}
         history={history}
-        onRefresh={refreshHistory}
+        onRefresh={handleRefreshHistory}
         onLoadHistory={handleLoadHistory}
       />
+
     </div>
   );
 }
