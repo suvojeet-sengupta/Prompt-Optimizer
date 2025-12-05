@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import ReactMarkdown from 'react-markdown';
 import { MessageSquare, LayoutTemplate, FileDiff, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SkeletonLoader } from './SkeletonLoader';
+import { MarkdownRenderer } from './ui/MarkdownRenderer';
+import { TabButton } from './ui/TabButton';
 
 interface EditorDisplayProps {
     output: string;
@@ -93,7 +94,7 @@ export function EditorDisplay({ output, originalInput, isLoading, error }: Edito
                             className="w-full h-full"
                         >
                             {activeTab === 'optimized' && (
-                                <MarkdownView content={output} />
+                                <MarkdownRenderer content={output} />
                             )}
 
                             {activeTab === 'original' && (
@@ -112,7 +113,7 @@ export function EditorDisplay({ output, originalInput, isLoading, error }: Edito
                                     </div>
                                     <div className="flex flex-col h-full overflow-y-auto custom-scrollbar">
                                         <h4 className="text-xs font-semibold text-indigo-400 uppercase mb-3 sticky top-0 bg-[#131316] py-2 z-10">Optimized</h4>
-                                        <MarkdownView content={output} />
+                                        <MarkdownRenderer content={output} />
                                     </div>
                                 </div>
                             )}
@@ -130,73 +131,4 @@ export function EditorDisplay({ output, originalInput, isLoading, error }: Edito
             )}
         </main>
     );
-}
-
-function TabButton({ active, onClick, icon, label, disabled }: { active: boolean, onClick: () => void, icon: React.ReactNode, label: string, disabled?: boolean }) {
-    return (
-        <button
-            onClick={onClick}
-            disabled={disabled}
-            className={`
-                flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-all duration-200
-                ${active 
-                    ? 'bg-zinc-800 text-indigo-300 shadow-sm' 
-                    : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50'
-                }
-                ${disabled ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}
-            `}
-        >
-            {icon}
-            {label}
-        </button>
-    );
-}
-
-function MarkdownView({ content }: { content: string }) {
-    return (
-        <div className="prose prose-invert prose-sm max-w-none text-zinc-300 h-full overflow-y-auto custom-scrollbar pb-4">
-             <ReactMarkdown
-                components={{
-                    code: ({ node, ...props }) => (
-                        <code className="bg-zinc-800/50 border border-zinc-700/50 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs" {...props} />
-                    ),
-                    pre: ({ node, ...props }) => (
-                        <pre className="bg-[#0f0f11] border border-zinc-800 rounded-xl p-4 my-4 custom-scrollbar overflow-x-auto shadow-sm" {...props} />
-                    ),
-                    h1: ({ node, ...props }) => (
-                        <h1 className="text-xl font-bold text-zinc-100 mt-6 mb-4 pb-2 border-b border-zinc-800/50" {...props} />
-                    ),
-                    h2: ({ node, ...props }) => (
-                        <h2 className="text-lg font-semibold text-zinc-100 mt-6 mb-3" {...props} />
-                    ),
-                    h3: ({ node, ...props }) => (
-                        <h3 className="text-base font-medium text-indigo-400 mt-4 mb-2" {...props} />
-                    ),
-                    p: ({ node, ...props }) => (
-                        <p className="leading-relaxed mb-4 text-zinc-300/90" {...props} />
-                    ),
-                    ul: ({ node, ...props }) => (
-                        <ul className="list-disc pl-5 space-y-2 my-4 text-zinc-400 marker:text-zinc-600" {...props} />
-                    ),
-                    ol: ({ node, ...props }) => (
-                        <ol className="list-decimal pl-5 space-y-2 my-4 text-zinc-400 marker:text-zinc-600" {...props} />
-                    ),
-                    li: ({ node, ...props }) => (
-                        <li className="pl-1" {...props} />
-                    ),
-                    strong: ({ node, ...props }) => (
-                        <strong className="text-zinc-100 font-semibold" {...props} />
-                    ),
-                    blockquote: ({ node, ...props }) => (
-                        <blockquote className="border-l-2 border-indigo-500/50 pl-4 py-1 my-4 text-zinc-400 italic" {...props} />
-                    ),
-                     hr: ({ node, ...props }) => (
-                        <hr className="my-8 border-zinc-800" {...props} />
-                    )
-                }}
-            >
-                {content}
-            </ReactMarkdown>
-        </div>
-    )
 }

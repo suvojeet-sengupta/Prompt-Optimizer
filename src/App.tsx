@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { callGeminiAPI } from './lib/gemini';
-import { getHistory, saveToHistory, type HistoryItem } from './lib/storage';
+import { getHistory, type HistoryItem } from './lib/storage';
+import { useOptimizer } from './hooks/useOptimizer';
 import { TopBar } from './components/TopBar';
 import { BottomInputBar } from './components/BottomInputBar';
 import { Sidebar } from './components/Sidebar';
@@ -10,48 +10,26 @@ import { HistoryPanel } from './components/HistoryPanel';
 import { CommandMenu } from './components/CommandMenu';
 
 function App() {
-  const [input, setInput] = useState('');
-  const [lastOptimizedInput, setLastOptimizedInput] = useState('');
-  const [output, setOutput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [toast, setToast] = useState<{ visible: boolean; message: string; sub?: string }>({ visible: false, message: '' });
+
+  const {
+    input,
+    setInput,
+    output,
+    setOutput,
+    lastOptimizedInput,
+    setLastOptimizedInput,
+    isLoading,
+    error,
+    handleOptimize
+  } = useOptimizer(setHistory, setToast);
 
   // Load history on mount
   useEffect(() => {
     setHistory(getHistory());
   }, []);
-
-  const handleOptimize = async () => {
-    if (!input.trim()) return;
-
-    setIsLoading(true);
-    setError(null);
-    setToast({ visible: true, message: 'Optimizing prompt...', sub: 'Extracting edits and improving structure.' });
-
-    try {
-      const result = await callGeminiAPI(input);
-      setOutput(result);
-      setLastOptimizedInput(input);
-
-      // Save to history
-      saveToHistory({
-        input,
-        output: result,
-        // Category is removed, handled by universal prompt
-      });
-      setHistory(getHistory()); // Refresh history
-
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unknown error occurred');
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-      setTimeout(() => setToast(prev => ({ ...prev, visible: false })), 3000); // Hide toast after delay
-    }
-  };
 
   const handleCopy = async () => {
     if (output) {
@@ -71,21 +49,22 @@ function App() {
     setHistory(getHistory());
   };
 
+  const handleClear = () => {
+      setInput('');
+      setOutput('');
+      setLastOptimizedInput('');
+  };
+
   return (
     <div className="h-screen bg-[#18181b] bg-grid-pattern text-white font-sans selection:bg-indigo-500/30 flex flex-col overflow-hidden">
 
       <TopBar
         onCopy={handleCopy}
-        onSave={() => setIsHistoryOpen(true)} // Using Save button to open history for now
-        onClose={() => { setInput(''); setOutput(''); setLastOptimizedInput(''); }}
+        onSave={() => setIsHistoryOpen(true)}
+        onClose={handleClear}
       />
 
-      {/* Main Content Area - Flex Grow to take remaining space, handles its own scroll */}
-      {/* Main Content Area: Sidebar + Editor */}
       <div className="flex-1 flex min-h-0 pt-14">
-
-
-        {/* Sidebar - Visible on Desktop */}
         <div className="hidden md:flex h-full">
           <Sidebar
             history={history}
@@ -93,7 +72,6 @@ function App() {
           />
         </div>
 
-        {/* Editor Container */}
         <div className="flex-1 flex flex-col min-h-0 relative">
           <EditorDisplay
             output={output}
@@ -129,7 +107,7 @@ function App() {
         onOptimize={handleOptimize}
         onCopy={handleCopy}
         onSave={() => setIsHistoryOpen(true)}
-        onClear={() => { setInput(''); setOutput(''); }}
+        onClear={handleClear}
       />
 
     </div>
