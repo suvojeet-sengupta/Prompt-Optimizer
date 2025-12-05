@@ -19,8 +19,8 @@ export function EditorDisplay({ output, isLoading, error }: EditorDisplayProps) 
                 </span>
             </div>
 
-            {/* Editor Content Area */}
-            <div className="min-h-[400px] w-full bg-[#1e1e22] rounded-lg border border-zinc-800/50 p-6 relative group">
+            {/* Editor Content Area - Glassmorphic */}
+            <div className="min-h-[400px] w-full glass-panel rounded-2xl p-8 relative group animate-scale-in overflow-y-auto custom-scrollbar">
                 {/* Empty State / Error / Output */}
                 {!output && !error ? (
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-zinc-600 opacity-50 select-none pointer-events-none">
@@ -28,12 +28,12 @@ export function EditorDisplay({ output, isLoading, error }: EditorDisplayProps) 
                         <p className="text-sm">Output will appear here...</p>
                     </div>
                 ) : error ? (
-                    <div className="text-red-400 text-sm p-4 text-center">
+                    <div className="text-red-400 text-sm p-4 text-center animate-fade-in-up">
                         <p className="font-semibold">Error</p>
                         <p className="opacity-70">{error}</p>
                     </div>
                 ) : (
-                    <div className="prose prose-invert prose-sm max-w-none text-zinc-300">
+                    <div className="prose prose-invert prose-sm max-w-none text-zinc-300 animate-fade-in-up">
                         <ReactMarkdown
                             components={{
                                 code: ({ node, ...props }) => (

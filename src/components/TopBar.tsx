@@ -25,14 +25,14 @@ export function TopBar({ onCopy, onSave, onClose }: TopBarProps) {
             <div className="flex items-center gap-2">
                 <button
                     onClick={onCopy}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-medium transition-colors"
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl glass-button text-zinc-300 text-xs font-medium hover:text-white"
                 >
                     <Copy className="w-3.5 h-3.5" />
                     Copy
                 </button>
                 <button
                     onClick={onSave}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-medium transition-colors"
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-xl glass-button text-zinc-300 text-xs font-medium hover:text-white"
                 >
                     <Save className="w-3.5 h-3.5" />
                     Save
