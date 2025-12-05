@@ -11,7 +11,7 @@ export function TopBar({ onCopy, onSave, onClose }: TopBarProps) {
         <header className="h-14 border-b border-zinc-800 bg-[#18181b] flex items-center justify-between px-4 fixed top-0 left-0 right-0 z-40 select-none">
             {/* Left: Model Selector */}
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-zinc-800/50 cursor-pointer transition-colors group">
-                <span className="text-sm font-medium text-zinc-300 group-hover:text-white">Optimize for GPT-5.1</span>
+                <span className="text-sm font-medium text-zinc-300 group-hover:text-white">Optimize for Gemini 2.5</span>
                 <ChevronDown className="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors" />
             </div>
 

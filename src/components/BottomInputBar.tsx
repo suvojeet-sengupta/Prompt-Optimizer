@@ -41,8 +41,8 @@ export function BottomInputBar({ input, setInput, onOptimize, isLoading }: Botto
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={handleKeyDown}
-                                placeholder="Describe your use case, desired behavior, and issues..."
-                                className="w-full bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm p-3 focus:outline-none resize-none max-h-[200px] overflow-y-auto custom-scrollbar"
+                                placeholder="Describe your use case..."
+                                className="w-full bg-transparent text-zinc-100 placeholder:text-zinc-500 text-sm px-4 py-3 focus:outline-none resize-none max-h-[200px] overflow-y-auto custom-scrollbar leading-relaxed"
                                 rows={1}
                                 disabled={isLoading}
                             />
