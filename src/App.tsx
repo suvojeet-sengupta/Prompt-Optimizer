@@ -36,7 +36,6 @@ function App() {
       saveToHistory({
         input,
         output: result,
-        timestamp: Date.now(),
         // Category is removed, handled by universal prompt
       });
       setHistory(getHistory()); // Refresh history
