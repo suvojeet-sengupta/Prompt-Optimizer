@@ -15,8 +15,8 @@ export function TopBar({ onCopy, onSave, onClose }: TopBarProps) {
                 <ChevronDown className="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors" />
             </div>
 
-            {/* Center: Title (Optional, hidden on small screens) */}
-            <div className="hidden md:flex items-center gap-2 opacity-0 hover:opacity-100 transition-opacity duration-500">
+            {/* Center: Title (Hidden on mobile, visible on desktop) */}
+            <div className="hidden md:flex items-center gap-2 opacity-0 hover:opacity-100 transition-opacity duration-500 absolute left-1/2 -translate-x-1/2">
                 <Sparkles className="w-4 h-4 text-zinc-600" />
                 <span className="text-xs font-mono text-zinc-600">PROMPT OPTIMIZER</span>
             </div>

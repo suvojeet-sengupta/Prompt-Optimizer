@@ -11,7 +11,7 @@ export function EditorDisplay({ output, isLoading, error }: EditorDisplayProps) 
     if (isLoading) return null; // Loading is handled by Toast/Overlay usually, but we keep the editor clean
 
     return (
-        <main className="flex-1 w-full max-w-4xl mx-auto pt-20 pb-40 px-6 h-full overflow-y-auto">
+        <main className="flex-1 w-full max-w-4xl mx-auto pt-20 pb-40 px-4 md:px-6 overflow-y-auto custom-scrollbar scroll-smooth">
             {/* Label */}
             <div className="flex items-center gap-2 mb-2 px-2">
                 <span className="text-[10px] font-medium uppercase tracking-wider text-zinc-500">

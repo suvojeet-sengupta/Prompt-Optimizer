@@ -67,7 +67,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#18181b] text-white font-sans selection:bg-indigo-500/30">
+    <div className="h-screen bg-[#18181b] text-white font-sans selection:bg-indigo-500/30 flex flex-col overflow-hidden">
 
       <TopBar
         onCopy={handleCopy}
@@ -75,18 +75,21 @@ function App() {
         onClose={() => { setInput(''); setOutput(''); }}
       />
 
-      <EditorDisplay
-        output={output}
-        isLoading={isLoading}
-        error={error}
-      />
+      {/* Main Content Area - Flex Grow to take remaining space, handles its own scroll */}
+      <div className="flex-1 flex flex-col min-h-0 relative">
+        <EditorDisplay
+          output={output}
+          isLoading={isLoading}
+          error={error}
+        />
 
-      <BottomInputBar
-        input={input}
-        setInput={setInput}
-        onOptimize={handleOptimize}
-        isLoading={isLoading}
-      />
+        <BottomInputBar
+          input={input}
+          setInput={setInput}
+          onOptimize={handleOptimize}
+          isLoading={isLoading}
+        />
+      </div>
 
       <Toast
         isVisible={toast.visible}
