@@ -7,6 +7,7 @@ import { Sidebar } from './components/Sidebar';
 import { EditorDisplay } from './components/EditorDisplay';
 import { Toast } from './components/Toast';
 import { HistoryPanel } from './components/HistoryPanel';
+import { CommandMenu } from './components/CommandMenu';
 
 function App() {
   const [input, setInput] = useState('');
@@ -118,6 +119,13 @@ function App() {
         history={history}
         onRefresh={handleRefreshHistory}
         onLoadHistory={handleLoadHistory}
+      />
+
+      <CommandMenu
+        onOptimize={handleOptimize}
+        onCopy={handleCopy}
+        onSave={() => setIsHistoryOpen(true)}
+        onClear={() => { setInput(''); setOutput(''); }}
       />
 
     </div>
