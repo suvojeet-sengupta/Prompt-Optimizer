@@ -40,22 +40,25 @@ export function EditorDisplay({ output, isLoading, error }: EditorDisplayProps) 
                                     <code className="bg-zinc-800/50 border border-zinc-700/50 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-xs" {...props} />
                                 ),
                                 pre: ({ node, ...props }) => (
-                                    <pre className="bg-[#131316] border border-zinc-800 rounded-xl p-4 my-4 custom-scrollbar overflow-x-auto" {...props} />
+                                    <pre className="bg-[#131316] border border-zinc-800 rounded-xl p-5 my-6 custom-scrollbar overflow-x-auto shadow-sm" {...props} />
                                 ),
                                 h1: ({ node, ...props }) => (
-                                    <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mt-8 mb-4 flex items-center gap-2 pb-2 border-b border-zinc-800/50" {...props} />
+                                    <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mt-10 mb-6 flex items-center gap-2 pb-3 border-b border-zinc-800/50" {...props} />
                                 ),
                                 h2: ({ node, ...props }) => (
-                                    <h2 className="text-lg font-semibold text-zinc-100 mt-8 mb-3 flex items-center gap-2" {...props} />
+                                    <h2 className="text-lg font-semibold text-zinc-100 mt-10 mb-4 flex items-center gap-2" {...props} />
                                 ),
                                 h3: ({ node, ...props }) => (
-                                    <h3 className="text-base font-medium text-indigo-400 mt-6 mb-2" {...props} />
+                                    <h3 className="text-base font-medium text-indigo-400 mt-8 mb-3" {...props} />
+                                ),
+                                p: ({ node, ...props }) => (
+                                    <p className="leading-relaxed mb-4 text-zinc-300/90" {...props} />
                                 ),
                                 ul: ({ node, ...props }) => (
-                                    <ul className="list-disc pl-5 space-y-2 my-4 text-zinc-400 marker:text-indigo-500" {...props} />
+                                    <ul className="list-disc pl-5 space-y-3 my-6 text-zinc-400 marker:text-indigo-500 leading-relaxed" {...props} />
                                 ),
                                 ol: ({ node, ...props }) => (
-                                    <ol className="list-decimal pl-5 space-y-2 my-4 text-zinc-400 marker:text-indigo-500" {...props} />
+                                    <ol className="list-decimal pl-5 space-y-3 my-6 text-zinc-400 marker:text-indigo-500 leading-relaxed" {...props} />
                                 ),
                                 li: ({ node, ...props }) => (
                                     <li className="pl-1" {...props} />
@@ -64,10 +67,10 @@ export function EditorDisplay({ output, isLoading, error }: EditorDisplayProps) 
                                     <strong className="text-zinc-200 font-semibold" {...props} />
                                 ),
                                 blockquote: ({ node, ...props }) => (
-                                    <blockquote className="border-l-4 border-indigo-500 pl-4 py-2 my-6 bg-zinc-900/50 rounded-r-lg text-indigo-200/90 italic shadow-sm" {...props} />
+                                    <blockquote className="border-l-4 border-indigo-500 pl-6 py-3 my-8 bg-zinc-900/50 rounded-r-lg text-indigo-200/90 italic shadow-sm leading-relaxed" {...props} />
                                 ),
                                 hr: ({ node, ...props }) => (
-                                    <hr className="my-8 border-zinc-800" {...props} />
+                                    <hr className="my-10 border-zinc-800" {...props} />
                                 )
                             }}
                         >
